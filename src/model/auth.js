@@ -2,7 +2,7 @@ const connection = require('../config/mysql');
 const bcrypt = require('bcryptjs');
 
 module.exports = {
-	login: (username, password) => {
+	loginUser: (username, password) => {
 		return new Promise((resolve, reject) => {
 			connection.query('SELECT * FROM user WHERE (user_username=? OR user_email=?) ', [username, username], (error, result) => {
 				if (!error) {
@@ -21,7 +21,7 @@ module.exports = {
 			);
 		});
 	},
-	register: (setData) => {
+	registerUser: (setData) => {
 		return new Promise((resolve, reject) => {
 			setData.user_password =  bcrypt.hashSync(setData.user_password, 3);
 			connection.query('INSERT INTO user SET ?', setData, (error, result) => {

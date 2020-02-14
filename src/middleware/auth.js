@@ -1,8 +1,7 @@
 const helper = require('../helper');
-const crypto = require('crypto');
 
 module.exports = {
-	register: (request, response, next) => {
+	registerUserMiddleware: (request, response, next) => {
 		var body = {};
 
 		//Check password
@@ -60,7 +59,7 @@ module.exports = {
 		request.body = body;
 		next();
 	},
-	login: (request, response, next) => {
+	loginUserMiddleware: (request, response, next) => {
 		var body = {};
 
 		//Check username

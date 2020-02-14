@@ -1,10 +1,10 @@
 const express = require('express');
 const route = express.Router();
 
-const authController = require('../controller/auth');
-const authMiddleware = require('../middleware/auth');
+const {loginUser, registerUser} = require('../controller/auth');
+const {loginUserMiddleware, registerUserMiddleware} = require('../middleware/auth');
 
-route.post('/login', authMiddleware.login, authController.login);
-route.post('/register', authMiddleware.register, authController.register);
+route.post('/login', loginUserMiddleware, loginUser);
+route.post('/register', registerUserMiddleware, registerUser);
 
 module.exports = route;
