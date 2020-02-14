@@ -35,6 +35,17 @@ module.exports = {
 				body.user_phone = request.body.phone;
 			}
 		}
+        
+		//Check name
+		if (request.body.name !== undefined) {
+			if (/^[a-zA-Z@0-9' ]{3,255}$/.test(request.body.name) == false) {
+				helper.response(response, 400, 'Invalid name format');
+			} else {
+				body.user_name = request.body.name;
+			}
+		} else {
+			helper.response(response, 400, 'Name cannot be empty');
+		}
 
 		//Check Email
 		if (request.body.email !== undefined) {
