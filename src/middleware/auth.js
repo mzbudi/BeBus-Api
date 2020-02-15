@@ -6,6 +6,7 @@ module.exports = {
 
 		//Check password
 		if (request.body.password !== undefined) {
+			console.log(request.body.password);
 			if (/^.{3,255}$/.test(request.body.password) == false) {
 				helper.response(response, 400, 'Password too short');
 			} else {

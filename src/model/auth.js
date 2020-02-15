@@ -27,7 +27,7 @@ module.exports = {
 			connection.query('INSERT INTO user SET ?', setData, (error, result) => {
 				if (!error) {
 					const finalResult = { id: result.insertId, ...setData };
-					delete finalResult.password;
+					delete finalResult.user_password;
 					resolve(finalResult);
 				} else {
 					if (error.code == 'ER_DUP_ENTRY')
