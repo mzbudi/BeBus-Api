@@ -6,7 +6,7 @@ const stationRoute = require('./station');
 const cityRoute = require('./city');
 const userRoute = require('./user');
 const scheduleRoute = require('./schedule');
-const bookingRoute = require('./schedule');
+const bookingRoute = require('./booking');
 
 const { authorization } = require('../middleware/authorization');
 
