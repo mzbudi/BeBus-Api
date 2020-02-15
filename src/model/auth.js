@@ -9,7 +9,7 @@ module.exports = {
 					if (result.length) {
 						if(bcrypt.compareSync(password, result[0].user_password)){
 							const finalResult = result[0];
-							delete finalResult.password;
+							delete finalResult.user_password;
 							resolve(finalResult);
 						}
 					}

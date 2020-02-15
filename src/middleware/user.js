@@ -2,7 +2,7 @@ const helper = require('../helper/');
 const {verifyUser} = require('../model/user');
 
 module.exports = {
-	putUserByIdMiddleware: (request, response, next) => {
+	putUserByIdMiddleware: async (request, response, next) => {
 		if (/^[0-9]+$/.test(request.params.id) == false) {
 			return helper.response(response, 400, 'Invalid user ID.');
 		}
@@ -44,7 +44,7 @@ module.exports = {
 		if (request.body.new_password !== undefined) {
 			if (/^.{5,100}$/.test(request.body.new_password) == true) {
 				if (request.body.old_password !== undefined) {
-					if(verifyUser(request.params.id, request.body.old_password)){
+					if(await verifyUser(request.params.id, request.body.old_password)){
 						body.user_password = request.body.new_password;
 					} else {
 						return helper.response(response, 400, 'Incorrect old password');
