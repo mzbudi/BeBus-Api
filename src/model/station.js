@@ -3,7 +3,7 @@ const connection = require('../config/mysql');
 module.exports = {
 	getAllStation : () => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM station JOIN city',(error,result)=>{
+			connection.query('SELECT * FROM `station` join city WHERE station.bus_station_city_id = city.city_id',(error,result)=>{
 				if(!error){
 					resolve(result);
 				}else{
