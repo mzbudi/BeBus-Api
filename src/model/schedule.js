@@ -4,7 +4,7 @@ module.exports = {
 	getAllSchedule: (query) => {
 		return new Promise((resolve, reject) => {
 			//apply filters...
-			var where = [];
+			let where = [];
 			if (query.date) { //filter date?
 				where.push(`DATE(schedule_departure_time)='${query.date}'`);
 			}
@@ -17,7 +17,7 @@ module.exports = {
 			if (query.passenger) { //how many passengers?
 				where.push(`(bus_capacity-claimed_seat >= ${query.passenger})`);
 			}
-			var whereClause = (where.length) ? 'WHERE ' + where.join(' AND ') : '';
+			let whereClause = (where.length) ? 'WHERE ' + where.join(' AND ') : '';
 			connection.query(`
             SELECT * FROM (
                 SELECT schedule.*, bus.*, COUNT(*) AS claimed_seat 
@@ -38,7 +38,13 @@ module.exports = {
 	},
 	getScheduleById: (id) => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM schedule JOIN bus ON schedule_bus_id=bus_id WHERE schedule_id=?', [id], (error, result) => {
+			connection.query(`
+			SELECT a.*, b.*, GROUP_CONCAT(booking_seat_number) as claimed_seats 
+				FROM schedule a
+				JOIN bus b ON schedule_bus_id=bus_id 
+				JOIN booking c ON schedule_id=booking_schedule_id
+				WHERE schedule_id=?
+			`, [id], (error, result) => {
 				if (!error) {
 					if (result.length) {
 						resolve(result[0]);
