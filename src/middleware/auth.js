@@ -6,7 +6,7 @@ module.exports = {
 		var body = {};
 
 		//Check password
-		if (request.body.password !== undefined) {
+		if (request.body.password !== undefined && request.body.password !== '') {
 			console.log(request.body.password);
 			if (/^.{3,255}$/.test(request.body.password) == false) {
 				return helper.response(response, 400, 'Password too short');
@@ -18,7 +18,7 @@ module.exports = {
 		}
 
 		//Check username
-		if (request.body.username !== undefined) {
+		if (request.body.username !== undefined && request.body.username !== '') {
 			if (/^[a-z0-9_.]{5,255}$/.test(request.body.username) == false) {
 				return helper.response(response, 400, 'Invalid username format');
 			} else {
@@ -29,7 +29,7 @@ module.exports = {
 		}
 
 		//Check phone (optional)
-		if (request.body.phone !== undefined) {
+		if (request.body.phone !== undefined && request.body.phone !== '' ) {
 			if (/^[0-9]{9,15}$/.test(request.body.phone) == false) {
 				return helper.response(response, 400, 'Invalid phone number');
 			} else {
@@ -38,7 +38,7 @@ module.exports = {
 		}
         
 		//Check name
-		if (request.body.name !== undefined) {
+		if (request.body.name !== undefined && request.body.name !== '') {
 			if (/^[a-zA-Z@0-9' ]{3,255}$/.test(request.body.name) == false) {
 				return helper.response(response, 400, 'Invalid name format');
 			} else {
@@ -49,7 +49,7 @@ module.exports = {
 		}
 
 		//Check Email
-		if (request.body.email !== undefined) {
+		if (request.body.email !== undefined && request.body.email !== '') {
 			if (/^[a-zA-Z@0-9_.]{3,255}$/.test(request.body.email) == false) {
 				return helper.response(response, 400, 'Invalid email format');
 			} else {
@@ -65,14 +65,14 @@ module.exports = {
 		var body = {};
 
 		//Check username
-		if (request.body.username !== undefined) {
+		if (request.body.username !== undefined && request.body.username !== '') {
 			body.user_username = request.body.username;
 		} else {
 			return helper.response(response, 400, 'Username cannot be empty');
 		}
         
 		//Check password
-		if (request.body.password !== undefined) {
+		if (request.body.password !== undefined && request.body.password !== '') {
 			body.user_password = request.body.password;
 		} else {
 			return helper.response(response, 400, 'Password cannot be empty');

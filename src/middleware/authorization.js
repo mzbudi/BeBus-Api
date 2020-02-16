@@ -6,7 +6,7 @@ module.exports = {
 	authorization: (request, response, next) => {
 		try {
 			const token = request.get('Authorization');
-			if (token !== undefined) {
+			if (token !== undefined && token !== '') {
 				jwt.verify(token, 'RAHASIA', (error, decoded) => {
 					if (!error) {
 						request.authData = decoded;

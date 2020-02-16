@@ -5,7 +5,8 @@ const { getAllBooking, getBookingById, postBooking } = require('../model/booking
 module.exports = {
 	getBooking: async (request, response) => {
 		try {
-			if (request.params.bookingId !== undefined) {
+			
+			if (request.params.bookingId !== undefined && request.params.bookingId !== '') {
 				const result = await getBookingById(request.params.bookingId);
 				return helper.response(response, 200, result);
 			} else {
