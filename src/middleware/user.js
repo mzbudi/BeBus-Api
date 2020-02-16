@@ -10,7 +10,7 @@ module.exports = {
 
 		const body = {};
 		//Check name
-		if (request.body.name !== undefined) {
+		if (request.body.name !== undefined && request.body.name !== '') {
 			if (/^[a-zA-Z '-]{5,200}$/.test(request.body.name) == false) {
 				return helper.response(response, 400, 'Invalid name');
 			} else {
@@ -18,7 +18,7 @@ module.exports = {
 			}
 		}
 		//Check email
-		if (request.body.email !== undefined) {
+		if (request.body.email !== undefined && request.body.email !== '') {
 			if (/^[0-9a-zA-Z@_.]{3,100}$/.test(request.body.email) == false) {
 				return helper.response(response, 400, 'Invalid email');
 			} else {
@@ -26,7 +26,7 @@ module.exports = {
 			}
 		}
 		//Check phone
-		if (request.body.phone !== undefined) {
+		if (request.body.phone !== undefined && request.body.phone !== '') {
 			if (/^[0-9]{9,15}$/.test(request.body.phone) == false) {
 				return helper.response(response, 400, 'Invalid Invalid phone');
 			} else {
@@ -34,7 +34,7 @@ module.exports = {
 			}
 		}
 		//Check username
-		if (request.body.username !== undefined) {
+		if (request.body.username !== undefined && request.body.username !== '') {
 			if (/^[0-9a-zA-Z_.]{3,100}$/.test(request.body.username) == false) {
 				return helper.response(response, 400, 'Invalid username');
 			} else {
@@ -42,9 +42,9 @@ module.exports = {
 			}
 		}
 		//Check password
-		if (request.body.new_password !== undefined) {
+		if (request.body.new_password !== undefined && request.body.new_password !=='') {
 			if (/^.{5,100}$/.test(request.body.new_password) == true) {
-				if (request.body.old_password !== undefined) {
+				if (request.body.old_password !== undefined && request.body.old_password !== '') {
 					if(await verifyUser(request.params.id, request.body.old_password)){
 						body.user_password = request.body.new_password;
 					} else {
@@ -58,7 +58,7 @@ module.exports = {
 			}
 		}
 		//Check photo
-		if (request.body.photo !== undefined) {
+		if (request.body.photo !== undefined && request.body.photo !== '') {
 			body.user_photo = request.body.photo;
 		}
 		request.body = body;

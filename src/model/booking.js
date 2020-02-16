@@ -38,5 +38,21 @@ module.exports = {
 				}
 			});
 		});
+	},
+	putBooking: (bookingNumber, setData) => {
+		return new Promise((resolve, reject) => {
+			connection.query('UPDATE booking SET ?', setData, (error, result) => {
+				if (!error) {
+					if (result.affectedRows) {
+						const finalResult = { id: result.insertId, ...setData };
+						resolve(finalResult);
+					} else {
+						reject(new Error(`User with id:${id} not found.`));
+					}
+				} else {
+					reject(error);
+				}
+			});
+		});
 	}
 };

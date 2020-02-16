@@ -5,7 +5,7 @@ module.exports = {
 		let body = {};
 
 		//Check seat number
-		if (request.body.seat_number !== undefined) {
+		if (request.body.seat_number !== undefined && request.body.seat_number !== '') {
 			if (/^[0-9]{1,3}$/.test(request.body.seat_number) == false) {
 				helper.response(response, 400, 'Invalid seat number');
 			} else {
@@ -15,7 +15,7 @@ module.exports = {
 			helper.response(response, 400, 'Seat number cannot be empty');
 		}
 		//Check booking user id
-		if (request.body.user_id !== undefined) {
+		if (request.body.user_id !== undefined && request.body.user_id !== '') {
 			if (/^[0-9]{1,3}$/.test(request.body.user_id) == false) {
 				helper.response(response, 400, 'Invalid user ID');
 			} else {
@@ -25,7 +25,7 @@ module.exports = {
 			helper.response(response, 400, 'User ID cannot be empty');
 		}
 		//Check schedule id
-		if (request.body.schedule_id !== undefined) {
+		if (request.body.schedule_id !== undefined && request.body.schedule_id !== '') {
 			if (/^[0-9]{1,3}$/.test(request.body.schedule_id) == false) {
 				helper.response(response, 400, 'Invalid schedule ID');
 			} else {
