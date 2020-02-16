@@ -1,5 +1,6 @@
 const helper = require('../helper/');
 const {verifyUser} = require('../model/user');
+const nodemailer = require('nodemailer');
 
 module.exports = {
 	putUserByIdMiddleware: async (request, response, next) => {
@@ -60,7 +61,6 @@ module.exports = {
 		if (request.body.photo !== undefined) {
 			body.user_photo = request.body.photo;
 		}
-        
 		request.body = body;
 		next();
 	}

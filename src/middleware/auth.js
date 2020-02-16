@@ -1,7 +1,8 @@
 const helper = require('../helper');
 
+
 module.exports = {
-	registerUserMiddleware: (request, response, next) => {
+	registerUserMiddleware: async (request, response, next) => {
 		var body = {};
 
 		//Check password
@@ -78,5 +79,43 @@ module.exports = {
 		}
 		request.body = body;
 		next();
+	},
+	forgotPasswordEmailMiddleware: (request,response,next)=>{
+		const body ={};
+		if(request.body.email !== undefined && request.body.email !== ''){
+			body.user_email = request.body.email;
+		}else{
+			helper.response(response,400,'E-mail Can\'t be Empty');
+		}
+		request.body = body;
+		next();
+	},
+	forgotPasswordMiddleware: async (request, response, next)=>{
+		const body = {};
+		if(request.body.password !== undefined && request.body.password !== ''){
+			body.password = request.body.password;
+		}else{
+			return helper.response(response,400,'Password Can\'t be Empty');
+		}
+		
+		if(request.body.rePassword !== undefined && request.body.rePassword !== ''){
+			body.password = request.body.rePassword;
+		}else{
+			return helper.response(response,400,'Password Can\'t be Empty');
+		}
+
+		if(request.body.password !== request.body.rePassword){
+			return helper.response(response,400,'Password Does Not Match');
+		}
+
+		if(request.body.resetKey !== undefined && request.body.resetKey !== ''){
+			body.resetKey = request.body.resetKey;
+		}else{
+			return helper.response(response, 400, 'Code Must Be Filled');
+		}
+
+		request.body = body;
+		next();
 	}
+
 };
