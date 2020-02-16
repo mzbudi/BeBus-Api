@@ -66,6 +66,18 @@ module.exports = {
 				return helper.response(response, 400, 'Invalid maxDepartureTime query');
 			}
 		}
+		//check minArrivalTime
+		if (request.query.minArrivalTime !== undefined) {
+			if (/^[0-9]{2}:[0-9]{2}$/.test(request.query.minArrivalTime) == false) {
+				return helper.response(response, 400, 'Invalid minArrivalTime query');
+			}
+		}
+		//check maxArrivalTime
+		if (request.query.maxArrivalTime !== undefined) {
+			if (/^[0-9]{2}:[0-9]{2}$/.test(request.query.maxArrivalTime) == false) {
+				return helper.response(response, 400, 'Invalid maxArrivalTime query');
+			}
+		}
 		next();
 	}
 };

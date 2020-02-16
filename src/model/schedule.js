@@ -34,8 +34,6 @@ module.exports = {
 			}
 			//filter minimum departure time
 			if (query.minDepartureTime) {
-				console.log(`(TIME(schedule_departure_time) >= '${query.minDepartureTime}:00')`);
-				
 				where.push(`TIME(schedule_departure_time) >= '${query.minDepartureTime}:00'`);
 			}
 			//filter maximum departure time
