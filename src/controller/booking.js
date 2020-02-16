@@ -25,4 +25,15 @@ module.exports = {
 			return helper.response(response, 400, error);
 		}
 	},
+	postMidtransNotification: async (request, response) => {
+		try {
+			switch(request.body.transaction_status){
+			case 'pending':
+				console.log('pending');
+					
+			}
+		} catch (error) {
+			return helper.response(response, 400, error);
+		}
+	}
 };

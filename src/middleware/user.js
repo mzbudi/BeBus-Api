@@ -58,7 +58,7 @@ module.exports = {
 			}
 		}
 		//Check photo
-		if (request.body.photo !== undefined) {
+		if (request.body.photo !== undefined && request.body.photo !== '') {
 			body.user_photo = request.body.photo;
 		}
 		request.body = body;
