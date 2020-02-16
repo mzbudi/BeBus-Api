@@ -1,7 +1,6 @@
 const helper = require('../helper/');
 const path = require('path');
 const os = require('os');
-const fs = require('fs');
 const multer = require('multer');
 
 const multerOptions = {
