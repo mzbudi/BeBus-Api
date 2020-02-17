@@ -1,9 +1,9 @@
 const connection = require('../config/mysql');
 
 module.exports = {
-	getAllStation : () => {
+	getAllStation : (nameParams) => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM `station` join city WHERE station.station_city_id = city.city_id',(error,result)=>{
+			connection.query(`SELECT * FROM station JOIN city where city.city_name like '%${nameParams}%' and station.station_city_id = city.city_id`,(error,result)=>{
 				if(!error){
 					resolve(result);
 				}else{

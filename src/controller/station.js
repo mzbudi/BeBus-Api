@@ -6,8 +6,9 @@ module.exports = {
 	getStationByCityId : async (request, response) => {
 		try {
 			const city_id = request.params.city_id;
+			const nameParams = request.body.nameParams ? request.body.nameParams : '';
 			if(city_id === undefined){
-				const result = await getAllStation();
+				const result = await getAllStation(nameParams);
 				return helper.response(response,200,result);
 			}else{
 				const result = await getStationByCityId(city_id);
@@ -16,6 +17,5 @@ module.exports = {
 		} catch (error) {
 			return helper.response(response, 400,{message:' Data Does not Exist'});
 		}
-	}
-
+	},
 };
