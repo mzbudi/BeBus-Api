@@ -1,13 +1,14 @@
 const helper = require('../helper/');
 
-const { getAllBooking, getBookingById, postBooking } = require('../model/booking');
+const { getAllBooking, getBookingById, getBookingByBookingNumber, postBooking, putBooking } = require('../model/booking');
+//const { getMidtransPaymentUrl } = require('../model/midtrans');
 
 module.exports = {
 	getBooking: async (request, response) => {
 		try {
 			
-			if (request.params.bookingId !== undefined && request.params.bookingId !== '') {
-				const result = await getBookingById(request.params.bookingId);
+			if (request.params.bookingNumber !== undefined && request.params.bookingNumber !== '') {
+				const result = await getBookingByBookingNumber(request.params.bookingNumber);
 				return helper.response(response, 200, result);
 			} else {
 				const result = await getAllBooking();
@@ -21,17 +22,6 @@ module.exports = {
 		try {
 			const result = await postBooking(request.body);
 			return helper.response(response, 200, result);
-		} catch (error) {
-			return helper.response(response, 400, error);
-		}
-	},
-	postMidtransNotification: async (request, response) => {
-		try {
-			switch(request.body.transaction_status){
-			case 'pending':
-				console.log('pending');
-					
-			}
 		} catch (error) {
 			return helper.response(response, 400, error);
 		}
