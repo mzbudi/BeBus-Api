@@ -12,14 +12,29 @@ module.exports = {
 			});
 		});
 	},
-	getBookingById: (id) => {
+	getBookingById: (bookingId) => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM booking JOIN schedule ON booking_schedule_id=schedule_id JOIN bus ON schedule_bus_id=bus_id WHERE booking_id=?', [id], (error, result) => {
+			connection.query('SELECT * FROM booking JOIN schedule ON booking_schedule_id=schedule_id JOIN bus ON schedule_bus_id=bus_id WHERE booking_id=?', [bookingId], (error, result) => {
 				if (!error) {
 					if (result.length) {
 						resolve(result[0]);
 					} else {
-						reject('City ID not found');
+						reject('Booking not found');
+					}
+				} else {
+					reject(error);
+				}
+			});
+		});
+	},
+	getBookingByBookingNumber: (bookingNumber) => {
+		return new Promise((resolve, reject) => {
+			connection.query('SELECT * FROM booking JOIN schedule ON booking_schedule_id=schedule_id JOIN bus ON schedule_bus_id=bus_id WHERE booking_number=?', [bookingNumber], (error, result) => {
+				if (!error) {
+					if (result.length) {
+						resolve(result[0]);
+					} else {
+						reject('Booking not found');
 					}
 				} else {
 					reject(error);
@@ -41,13 +56,13 @@ module.exports = {
 	},
 	putBooking: (bookingNumber, setData) => {
 		return new Promise((resolve, reject) => {
-			connection.query('UPDATE booking SET ?', setData, (error, result) => {
+			connection.query('UPDATE booking SET ? WHERE booking_number=?', [setData, bookingNumber], (error, result) => {
 				if (!error) {
 					if (result.affectedRows) {
 						const finalResult = { id: result.insertId, ...setData };
 						resolve(finalResult);
 					} else {
-						reject(new Error(`User with id:${id} not found.`));
+						reject('Booking number not found');
 					}
 				} else {
 					reject(error);

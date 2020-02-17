@@ -7,6 +7,7 @@ const cityRoute = require('./city');
 const userRoute = require('./user');
 const scheduleRoute = require('./schedule');
 const bookingRoute = require('./booking');
+const paymentRoute = require('./payment');
 
 const { authorization } = require('../middleware/authorization');
 
@@ -16,5 +17,6 @@ route.use('/city', cityRoute);
 route.use('/user', userRoute);
 route.use('/schedule', scheduleRoute);
 route.use('/booking', bookingRoute);
+route.use('/payment', paymentRoute);
 
 module.exports = route;
