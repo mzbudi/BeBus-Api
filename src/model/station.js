@@ -3,7 +3,7 @@ const connection = require('../config/mysql');
 module.exports = {
 	getAllStation : () => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM `station` join city WHERE station.bus_station_city_id = city.city_id',(error,result)=>{
+			connection.query('SELECT * FROM `station` join city WHERE station.station_city_id = city.city_id',(error,result)=>{
 				if(!error){
 					resolve(result);
 				}else{
@@ -14,7 +14,7 @@ module.exports = {
 	},
 	getStationByCityId : (id) => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM station JOIN city where station.bus_station_city_id = ? and station.bus_station_city_id = city.city_id',[id],(error, result)=>{
+			connection.query('SELECT * FROM station JOIN city where station.station_city_id = ? and station.station_city_id = city.city_id',[id],(error, result)=>{
 				if(!error){
 					if(result.length === 0){
 						reject('Data Does Not Exist');
