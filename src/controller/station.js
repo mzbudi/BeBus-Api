@@ -6,7 +6,7 @@ module.exports = {
 	getStationByCityId : async (request, response) => {
 		try {
 			const city_id = request.params.city_id;
-			const nameParams = request.body.nameParams ? request.body.nameParams : '';
+			const nameParams = request.query.nameParams ? request.query.nameParams : '';
 			if(city_id === undefined){
 				const result = await getAllStation(nameParams);
 				return helper.response(response,200,result);
