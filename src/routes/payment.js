@@ -6,6 +6,6 @@ const { postPayment, postMidtransNotification } = require('../controller/payment
 
 route
 	.post('/:bookingNumber(\\d+)', postPayment)
-	.post('/midtransNotification', postMidtransNotification);
+	.post('/midtrans-notification', postMidtransNotification);
 
 module.exports = route;
