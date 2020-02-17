@@ -33,7 +33,7 @@ module.exports = {
 	forgotPasswordEmail: async (request, response) => {
 		try{
 			const resultEmail = await forgotPasswordEmail(request.body.user_email);
-			const verifCode = Math.round(Math.random() * 9999);
+			const verifCode = ((min, max) => Math.floor(Math.random() * (max - min + 1)) + min)(1000, 9999);
 			let reset_key = {
 				reset_key:verifCode
 			};
