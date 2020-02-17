@@ -43,9 +43,6 @@ module.exports = {
 					if (result.affectedRows) {
 						const finalResult = { id, ...setData };
 						if (finalResult.user_password) delete finalResult.user_password;
-						// if (finalResult.user_photo) {
-						// 	finalResult.user_photo = `${process.env.PROTOCOL}${process.env.HOST}:${process.env.PORT}/asset/${finalResult.user_photo}`;
-						// }
 						resolve(finalResult);
 					} else {
 						reject('Specified user id not found.');

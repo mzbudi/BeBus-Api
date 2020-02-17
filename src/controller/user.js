@@ -8,7 +8,7 @@ module.exports = {
 		try {
 			const result = await getUserById(request.params.id);
 			if (result.user_photo !== null && result.user_photo !== '') {
-				result.user_photo = `${process.env.PROTOCOL}${process.env.HOST}:${process.env.PORT}/assets/${result.user_photo}`;
+				result.user_photo = `${process.env.PUBLIC_ASSETS}/${result.user_photo}`;
 			}
 			return helper.response(response, 200, result);
 		} catch (error) {
@@ -20,14 +20,14 @@ module.exports = {
 			const oldUser = await getUserById(request.params.id);
 			if(request.body.user_photo !== undefined){
 				if (oldUser.user_photo !== null && oldUser.user_photo !== ''){
-					fs.unlinkSync(`assets/${oldUser.user_photo}`);
+					fs.unlink(`assets/${oldUser.user_photo}`, ()=>{});
 				}
-				fs.renameSync(request.body.user_photo.path, `assets/${request.body.user_photo.filename}`);
+				fs.rename(request.body.user_photo.path, `assets/${request.body.user_photo.filename}`, ()=>{});
 				request.body.user_photo = request.body.user_photo.filename;
 			}
 			const newUser = await putUserById(request.params.id, request.body);
-			if (newUser.user_photo !== null && newUser.user_photo !== '') {
-				newUser.user_photo = `${process.env.PROTOCOL}${process.env.HOST}:${process.env.PORT}/assets/${newUser.user_photo}`;
+			if (newUser.user_photo !== null && newUser.user_photo !== undefined) {
+				newUser.user_photo = `${process.env.PUBLIC_ASSETS}/${newUser.user_photo}`;
 			}
 			return helper.response(response, 200, newUser);
 		} catch (error) {
