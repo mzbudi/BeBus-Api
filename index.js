@@ -20,7 +20,7 @@ const routeBase = require('./src/routes/index');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(morgan('dev'));
-// app.use("/assets",express.static('./uploads'))
+app.use('/assets',express.static('./assets'));
 
 // app.use('/', cors(corsOptions), routeBase)
 app.use('/', routeBase);

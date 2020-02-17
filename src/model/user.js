@@ -2,6 +2,22 @@ const connection = require('../config/mysql');
 const bcrypt = require('bcryptjs');
 
 module.exports = {
+	getUserById: (userId) => {
+		return new Promise((resolve, reject) => {
+			connection.query('SELECT * FROM user WHERE user_id=?', [userId], (error, result) => {
+				if (!error) {
+					if (result.length) {
+						delete result[0].user_password;
+						resolve(result[0]);
+					}
+					resolve('User ID not found.');
+				} else {
+					reject(error);
+				}
+			}
+			);
+		});
+	},
 	verifyUser: (id, password) => {
 		return new Promise((resolve, reject) => {
 			connection.query('SELECT * FROM user WHERE user_id=?', [id], (error, result) => {

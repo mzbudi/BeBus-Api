@@ -37,7 +37,7 @@ module.exports = {
 				}
 				//check image
 				if (request.file) {
-					request.body[field] = request.file.filename;
+					request.body[field] = request.file;
 				}
 				next();
 			});
