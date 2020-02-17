@@ -28,28 +28,24 @@ module.exports = {
 			serverKey: 'SB-Mid-server-lA7COBHbLulu9nXRTV86ibWX',
 			clientKey: 'SB-Mid-client-Kz-4G2-QbnaVYyVH'
 		});
-		const booking = await snap.transaction.notification(request.body)
+		snap.transaction.notification(request.body)
 			.then((statusResponse) => {
 				let orderId = statusResponse.order_id;
 				let transactionStatus = statusResponse.transaction_status;
 				let fraudStatus = statusResponse.fraud_status;
 				if (transactionStatus == 'capture') {
 					if (fraudStatus == 'challenge') {
-						// TODO set transaction status on your databaase to 'challenge'
-						return putBooking(request.body.order_id, { booking_status: 'CHALLENGE' });
+						return putBooking(orderId, { booking_status: 'CHALLENGE' });
 					} else if (fraudStatus == 'accept') {
-						// TODO set transaction status on your databaase to 'success'
-						return  putBooking(request.body.order_id, { booking_status: 'PAID' });
+						return putBooking(orderId, { booking_status: 'PAID' });
 					}
 				} else if (transactionStatus == 'cancel' || transactionStatus == 'deny' || transactionStatus == 'expire') {
-					// TODO set transaction status on your databaase to 'failure'
-					return putBooking(request.body.order_id, { booking_status: 'FAILED' });
+					return putBooking(orderId, { booking_status: 'FAILED' });
 				} else if (transactionStatus == 'pending') {
-					// TODO set transaction status on your databaase to 'pending' / waiting payment
-					return putBooking(request.body.order_id, { booking_status: 'PENDING' });
+					 return putBooking(orderId, { booking_status: 'PENDING' });
 				}
-				return helper.response(response, 200, 'OK');
-			});
+			})
+			.then();
 	}
 	// postMidtransNotification: async (request, response) => {
 	// 	try {

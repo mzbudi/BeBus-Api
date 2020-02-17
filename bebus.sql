@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 17, 2020 at 07:52 AM
+-- Generation Time: Feb 17, 2020 at 08:08 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.1
 
@@ -157,18 +157,20 @@ CREATE TABLE `user` (
   `user_phone` varchar(15) DEFAULT NULL,
   `user_username` varchar(255) NOT NULL,
   `user_password` varchar(255) NOT NULL,
-  `user_photo` varchar(255) DEFAULT NULL
+  `user_photo` varchar(255) DEFAULT NULL,
+  `reset_key` varchar(255) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_name`, `user_email`, `user_phone`, `user_username`, `user_password`, `user_photo`) VALUES
-(1, 'Admin', 'admin@admin', NULL, 'admin', '$2a$04$n7azIK7y1cR818Fe9WfwKe4aEi.MXisDxsntFc2zHJXUug18c/l.6', '1581763586831.PNG'),
-(3, 'Admin', 'admin@admin10', NULL, 'admin10', '$2a$04$OM09Wx9WJCscBVjOK9X0dOXeqThpTvMTC5.trCwTytm2.rtPhROl.', NULL),
-(5, 'Admin', 'admin@admin11', NULL, 'admin11', '$2a$04$e88L5qZINoUHKqqglduGS.41e/qJD4yJWl4j6WsYfZRInOXy3xBmO', NULL),
-(6, 'Admin', 'admin@adminx', NULL, 'adminx', '$2a$04$yzg7h9pzgaPcLU.Aqj1YSOly73wzQwDc70LK9iKjL8ujDqv9cs6Om', NULL);
+INSERT INTO `user` (`user_id`, `user_name`, `user_email`, `user_phone`, `user_username`, `user_password`, `user_photo`, `reset_key`, `updated_at`) VALUES
+(1, 'Admin', 'admin@admin', NULL, 'admin', '$2a$04$n7azIK7y1cR818Fe9WfwKe4aEi.MXisDxsntFc2zHJXUug18c/l.6', '1581763586831.PNG', NULL, '2020-02-17 07:07:47'),
+(3, 'Admin', 'admin@admin10', NULL, 'admin10', '$2a$04$OM09Wx9WJCscBVjOK9X0dOXeqThpTvMTC5.trCwTytm2.rtPhROl.', NULL, NULL, '2020-02-17 07:07:47'),
+(5, 'Admin', 'admin@admin11', NULL, 'admin11', '$2a$04$e88L5qZINoUHKqqglduGS.41e/qJD4yJWl4j6WsYfZRInOXy3xBmO', NULL, NULL, '2020-02-17 07:07:47'),
+(6, 'Admin', 'admin@adminx', NULL, 'adminx', '$2a$04$yzg7h9pzgaPcLU.Aqj1YSOly73wzQwDc70LK9iKjL8ujDqv9cs6Om', NULL, NULL, '2020-02-17 07:07:47');
 
 --
 -- Indexes for dumped tables
