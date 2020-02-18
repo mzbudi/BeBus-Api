@@ -26,7 +26,7 @@ module.exports = {
 				let orderId = statusResponse.order_id;
 				let transactionStatus = statusResponse.transaction_status;
 				let fraudStatus = statusResponse.fraud_status;
-				redisClient.del(`booking:${orderId}`);
+				redisClient.del('booking*');
 				if (transactionStatus == 'capture') {
 					if (fraudStatus == 'challenge') {
 						return putBooking(orderId, { booking_status: 'CHALLENGE' });
