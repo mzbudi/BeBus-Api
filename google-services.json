@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "955321785401",
+    "firebase_url": "https://bebus-85d60.firebaseio.com",
+    "project_id": "bebus-85d60",
+    "storage_bucket": "bebus-85d60.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:955321785401:android:0fe253f5883182a42801e8",
+        "android_client_info": {
+          "package_name": "com.warungjs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "955321785401-ci9597iabbsda16n49j8ib2kot24psal.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAcCAFzsgA4u9VntyERd7UXeTISztBm4-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "955321785401-ci9597iabbsda16n49j8ib2kot24psal.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
