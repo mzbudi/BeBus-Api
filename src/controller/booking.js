@@ -6,6 +6,7 @@ const { getAllBooking, getBookingByBookingNumber, getBookingByBookingId, postBoo
 
 module.exports = {
 	getBooking: async (request, response) => {
+		const user_id = request.query.user_id;
 		const bookingNumber = request.params.bookingNumber;
 		try {
 			if (bookingNumber !== undefined && bookingNumber !== '') {
@@ -13,7 +14,7 @@ module.exports = {
 				redisClient.setex(`booking:${bookingNumber}`, process.env.REDIS_TTL, JSON.stringify(result));
 				return helper.response(response, 200, result);
 			} else {
-				const result = await getAllBooking();
+				const result = await getAllBooking(user_id);
 				redisClient.setex(`bookings:${JSON.stringify(request.query)}`, process.env.REDIS_TTL, JSON.stringify(result));
 				return helper.response(response, 200, result);
 			}
