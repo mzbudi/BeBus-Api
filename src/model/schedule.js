@@ -53,15 +53,23 @@ module.exports = {
 			connection.query(`
             SELECT * FROM (
 				SELECT 
-					a.*, b.*,d.station_city_id schedule_departure_city_id, 
-					e.station_city_id schedule_arrival_city_id, COUNT(*) schedule_claimed_seat 
+				a.*, b.*,
+				d.station_city_id schedule_departure_city_id,
+				d.station_name schedule_departure_station_name, 
+				e.station_city_id schedule_arrival_city_id, 
+				e.station_name schedule_arrival_station_name, 
+				f.city_name schedule_departure_city_name, 
+				g.city_name schedule_arrival_city_name, 
+				COUNT(c.booking_schedule_id) schedule_claimed_seat 
 				FROM schedule a
 				JOIN bus b ON schedule_bus_id=bus_id
-				JOIN booking c ON a.schedule_id=booking_schedule_id 
+				LEFT JOIN booking c ON a.schedule_id=booking_schedule_id 
 				JOIN station d ON d.station_id=a.schedule_departure_station_id
 				JOIN station e ON e.station_id=a.schedule_arrival_station_id
-				GROUP BY c.booking_schedule_id
-			) as f
+				JOIN city f ON f.city_id=d.station_city_id
+				JOIN city g ON g.city_id=e.station_city_id
+				GROUP BY a.schedule_id
+			) as h
             ${whereClause}
             `, (error, result) => {
 				if (!error) {
@@ -75,11 +83,22 @@ module.exports = {
 	getScheduleById: (id) => {
 		return new Promise((resolve, reject) => {
 			connection.query(`
-			SELECT a.*, b.*, GROUP_CONCAT(booking_seat_number) as claimed_seats 
-				FROM schedule a
-				JOIN bus b ON schedule_bus_id=bus_id 
-				JOIN booking c ON schedule_id=booking_schedule_id
-				WHERE schedule_id=?
+			SELECT a.*, b.*, 
+				d.station_city_id schedule_departure_city_id,
+				d.station_name schedule_departure_station_name, 
+				e.station_city_id schedule_arrival_city_id, 
+				e.station_name schedule_arrival_station_name, 
+				f.city_name schedule_departure_city_name, 
+				g.city_name schedule_arrival_city_name, 
+				GROUP_CONCAT(booking_seat_number) as claimed_seats 
+			FROM schedule a
+			JOIN bus b ON schedule_bus_id=bus_id 
+			LEFT JOIN booking c ON schedule_id=booking_schedule_id
+			JOIN station d ON d.station_id=a.schedule_departure_station_id
+			JOIN station e ON e.station_id=a.schedule_arrival_station_id
+			JOIN city f ON f.city_id=d.station_city_id
+			JOIN city g ON g.city_id=e.station_city_id
+			WHERE schedule_id=?
 			`, [id], (error, result) => {
 				if (!error) {
 					if (result.length) {

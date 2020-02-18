@@ -1,4 +1,5 @@
 const connection = require('../config/mysql');
+//const redisClient = require('../config/redis');
 
 module.exports = {
 	getAllBooking: () => {

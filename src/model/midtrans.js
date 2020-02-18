@@ -2,8 +2,6 @@ const midtransClient = require('midtrans-client');
 
 module.exports = {
 	createMidtransTransaction: (booking) => {
-		console.log(booking);
-        
 		return new Promise((resolve, reject) => {
 			let snap = new midtransClient.Snap({
 				isProduction: false,

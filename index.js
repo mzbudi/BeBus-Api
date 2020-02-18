@@ -4,12 +4,7 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const routeBase = require('./src/routes/index');
-//const redis = require('redis');
-//const client = redis.createClient();
 
-// client.on('connect', function() {
-// 	console.log('Redis client connected');
-// });
 // const cors = require('cors')
 // const helper = require('./src/helper/')
 
