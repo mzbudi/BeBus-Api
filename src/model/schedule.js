@@ -62,12 +62,12 @@ module.exports = {
 				g.city_name schedule_arrival_city_name, 
 				COUNT(c.booking_schedule_id) schedule_claimed_seat 
 				FROM schedule a
-				JOIN bus b ON schedule_bus_id=bus_id
+				LEFT JOIN bus b ON schedule_bus_id=bus_id
 				LEFT JOIN booking c ON a.schedule_id=booking_schedule_id 
-				JOIN station d ON d.station_id=a.schedule_departure_station_id
-				JOIN station e ON e.station_id=a.schedule_arrival_station_id
-				JOIN city f ON f.city_id=d.station_city_id
-				JOIN city g ON g.city_id=e.station_city_id
+				LEFT JOIN station d ON d.station_id=a.schedule_departure_station_id
+				LEFT JOIN station e ON e.station_id=a.schedule_arrival_station_id
+				LEFT JOIN city f ON f.city_id=d.station_city_id
+				LEFT JOIN city g ON g.city_id=e.station_city_id
 				GROUP BY a.schedule_id
 			) as h
             ${whereClause}
