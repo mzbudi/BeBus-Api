@@ -4,8 +4,6 @@ const nodemailer = require('nodemailer');
 
 module.exports = {
 	putUserByIdMiddleware: async (request, response, next) => {
-		console.log(request.body);
-		
 		if (/^[0-9]+$/.test(request.params.id) == false) {
 			return helper.response(response, 400, 'Invalid user ID.');
 		}

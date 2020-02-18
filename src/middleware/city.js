@@ -2,8 +2,8 @@ const helper = require('../helper');
 const redisClient = require('../config/redis');
 
 module.exports = {
-	getBookingMiddleware: (request, response, next) => {
-		redisClient.get(`booking:${request.params.scheduleId}`, (error, reply) => {
+	getCityByIdMiddleware: (request, response, next) => {
+		redisClient.get(`city:${request.params.cityId}`, (error, reply) => {
 			if (!error && reply != null) {
 				return helper.response(response, 200, JSON.parse(reply));
 			} else {
@@ -11,7 +11,7 @@ module.exports = {
 			}
 		});
 	},
-	postBookingMiddleware: (request, response, next) => {
+	getAllCityMiddleware: (request, response, next) => {
 		let body = {};
 
 		//Check seat number

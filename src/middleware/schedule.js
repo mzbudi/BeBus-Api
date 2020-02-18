@@ -1,9 +1,24 @@
 const helper = require('../helper');
+const redisClient = require('../config/redis');
 
 module.exports = {
+	getScheduleByIdMiddleware: (request, response, next) => {
+		redisClient.get(`schedule:${request.params.scheduleId}`, (error, reply) => {
+			if(!error && reply != null){
+				return helper.response(response, 200, JSON.parse(reply));
+			} else {
+				next();
+			}
+		});
+	},
 	getAllScheduleMiddleware: (request, response, next) => {
-		let body = {};
-
+		redisClient.get(`schedules:${JSON.stringify(request.query)}`, (error, reply) => {
+			if (!error && reply != null) {
+				return helper.response(response, 200, JSON.parse(reply));
+			} else {
+				next();
+			}
+		});
 		//Check date valid?
 		if (request.query.date !== undefined && request.query.date !== '') {
 			if (/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(request.query.date) == false) {
@@ -29,7 +44,7 @@ module.exports = {
 				return helper.response(response, 400, 'Invalid arrivalCity query');
 			}
 		} else if(request.query.arrivalStation !== undefined && request.query.arrivalStation !=='') {
-			if (/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(request.query.arrivalStation) == false) {
+			if (/^[0-9]{1,9}$/.test(request.query.arrivalStation) == false) {
 				return helper.response(response, 400, 'Invalid arrivalStation query');
 			}
 		}

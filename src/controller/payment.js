@@ -1,5 +1,6 @@
 const helper = require('../helper/');
 const midtransClient = require('midtrans-client');
+const redisClient = require('../config/redis');
 
 const { getAllBooking, getBookingById, getBookingByBookingNumber, postBooking, putBooking } = require('../model/booking');
 const { createMidtransTransaction } = require('../model/midtrans');
@@ -25,6 +26,7 @@ module.exports = {
 				let orderId = statusResponse.order_id;
 				let transactionStatus = statusResponse.transaction_status;
 				let fraudStatus = statusResponse.fraud_status;
+				redisClient.del(`booking:${orderId}`);
 				if (transactionStatus == 'capture') {
 					if (fraudStatus == 'challenge') {
 						return putBooking(orderId, { booking_status: 'CHALLENGE' });

@@ -1,17 +1,18 @@
 const helper = require('../helper/');
+const redisClient = require('../config/redis');
 
 const { getAllBooking, getBookingById, getBookingByBookingNumber, postBooking, putBooking } = require('../model/booking');
-//const { getMidtransPaymentUrl } = require('../model/midtrans');
 
 module.exports = {
 	getBooking: async (request, response) => {
+		const bookingNumber = request.params.bookingNumber;
 		try {
-			
-			if (request.params.bookingNumber !== undefined && request.params.bookingNumber !== '') {
-				const result = await getBookingByBookingNumber(request.params.bookingNumber);
+			if (bookingNumber !== undefined && bookingNumber !== '') {
+				const result = await getBookingByBookingNumber(bookingNumber);
 				return helper.response(response, 200, result);
 			} else {
 				const result = await getAllBooking();
+				redisClient.setex(`booking:${bookingNumber}`, process.env.REDIS_TTL, JSON.stringify(result));
 				return helper.response(response, 200, result);
 			}
 		} catch (error) {

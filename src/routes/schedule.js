@@ -2,10 +2,10 @@ const express = require('express');
 const route = express.Router();
 
 const { getSchedule } = require('../controller/schedule');
-const {getAllScheduleMiddleware} = require('../middleware/schedule');
+const {getScheduleByIdMiddleware} = require('../middleware/schedule');
 
 route
-	.get('/', getAllScheduleMiddleware, getSchedule)
-	.get('/:scheduleId', getSchedule);
+	.get('/', getSchedule)
+	.get('/:scheduleId', getScheduleByIdMiddleware, getSchedule);
 
 module.exports = route;

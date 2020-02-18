@@ -34,19 +34,19 @@ module.exports = {
 			}
 			//filter minimum departure time
 			if (query.minDepartureTime) {
-				where.push(`TIME(schedule_departure_time) >= '${query.minDepartureTime}:00'`);
+				where.push(`(TIME(schedule_departure_time) >= TIME('${query.minDepartureTime}:00'))`);
 			}
 			//filter maximum departure time
 			if (query.maxDepartureTime) {
-				where.push(`(TIME(schedule_departure_time) <= '${query.maxDepartureTime}:59')`);
+				where.push(`(TIME(schedule_departure_time) <= TIME('${query.maxDepartureTime}:59'))`);
 			}
 			//filter minimum arrival time
 			if (query.minArrivalTime) {
-				where.push(`(TIME(schedule_arrival_time) >= '${query.minArrivalTime}:00')`);
+				where.push(`(TIME(schedule_arrival_time) >= TIME('${query.minArrivalTime}:00'))`);
 			}
 			//filter maximum arrival time
 			if (query.maxArrivalTime) {
-				where.push(`(TIME(schedule_arrival_time) <= '${query.minArrivalTime}:59')`);
+				where.push(`(TIME(schedule_arrival_time) <= TIME('${query.maxArrivalTime}:59'))`);
 			}
 			let whereClause = (where.length) ? 'WHERE ' + where.join(' AND ') : '';
 

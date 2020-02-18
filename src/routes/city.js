@@ -6,6 +6,6 @@ const { getCity } = require('../controller/city');
 
 route
 	.get('/', getCity)
-	.get('/:id', getCity);
+	.get('/:cityId', getCity);
 
 module.exports = route;

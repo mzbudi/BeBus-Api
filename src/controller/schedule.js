@@ -1,6 +1,6 @@
 const helper = require('../helper');
 const { getAllSchedule, getScheduleById } = require('../model/schedule');
-//const redisClient = require('../config/redis');
+const redisClient = require('../config/redis');
 
 module.exports = {
 	getSchedule: async (request, response) => {
@@ -8,24 +8,11 @@ module.exports = {
 			const scheduleId = request.params.scheduleId;
 			if (scheduleId === undefined) {
 				const result = await getAllSchedule(request.query);
+				redisClient.setex(`schedules:${JSON.stringify(request.query)}`, process.env.REDIS_TTL, JSON.stringify(result));
 				return helper.response(response, 200, result);
 			} else {
-				// const result = await new Promise((resolve, reject) => {
-				// 	redisClient.get(
-				// 		'sched:'+scheduleId, (error, re							> {
-				// 		i								or) {
-				// 			console.lo								E ADA');
-				// 			resolve(J							rse(reply)									// 		} else {
-				// 			getScheduleById(schedule									((schedule) => {
-				// 				cons									'CACHE TIDAK ADA');
-				console.log(schedule);
-				// 				redisClient.setex('sched:'+scheduleId, 10, JSON.stri									hedule), (error, rep												/							res						schedule);
-				// 			});
-				// 		}
-				// 	});
-				// });
-				// return helper.response(response, 200, result);
 				const result = await getScheduleById(scheduleId);
+				redisClient.setex(`schedule:${request.params.scheduleId}`, process.env.REDIS_TTL, JSON.stringify(result));
 				return helper.response(response, 200, result);
 			}
 		} catch (error) {
