@@ -2,6 +2,15 @@ const helper = require('../helper');
 const redisClient = require('../config/redis');
 
 module.exports = {
+	getAllBookingMiddleware: (request, response, next) => {
+		redisClient.get(`bookings:${JSON.stringify(request.query)}`, (error, reply) => {
+			if (!error && reply != null) {
+				return helper.response(response, 200, JSON.parse(reply));
+			} else {
+				next();
+			}
+		});
+	},
 	getBookingMiddleware: (request, response, next) => {
 		redisClient.get(`booking:${request.params.scheduleId}`, (error, reply) => {
 			if (!error && reply != null) {
