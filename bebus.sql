@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 17 Feb 2020 pada 11.31
+-- Waktu pembuatan: 19 Feb 2020 pada 14.48
 -- Versi server: 10.1.38-MariaDB
 -- Versi PHP: 7.3.4
 
@@ -34,21 +34,23 @@ CREATE TABLE `booking` (
   `booking_seat_number` int(11) NOT NULL,
   `booking_user_id` int(11) NOT NULL,
   `booking_schedule_id` int(11) NOT NULL,
-  `booking_status` enum('UNPAID','PENDING','PAID','FAILED','CHALLENGE') NOT NULL DEFAULT 'UNPAID'
+  `booking_status` enum('UNPAID','PENDING','PAID','FAILED','CHALLENGE') NOT NULL DEFAULT 'UNPAID',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `booking`
 --
 
-INSERT INTO `booking` (`booking_id`, `booking_number`, `booking_seat_number`, `booking_user_id`, `booking_schedule_id`, `booking_status`) VALUES
-(1, 1, 1, 1, 1, 'PAID'),
-(2, 321, 2, 1, 1, 'PAID'),
-(3, 3367264, 2, 1, 2, 'PENDING'),
-(4, 1163631, 3, 1, 2, 'PAID'),
-(5, 3996640, 4, 1, 2, 'PAID'),
-(6, 1735029, 4, 1, 1, 'UNPAID'),
-(7, 123, 1, 1, 1, 'UNPAID');
+INSERT INTO `booking` (`booking_id`, `booking_number`, `booking_seat_number`, `booking_user_id`, `booking_schedule_id`, `booking_status`, `created_at`) VALUES
+(1, 1, 1, 1, 1, 'PAID', '2020-02-19 02:32:33'),
+(2, 321, 2, 1, 1, 'PAID', '2020-02-19 02:32:33'),
+(3, 3367264, 2, 1, 2, 'PENDING', '2020-02-19 02:32:33'),
+(4, 1163631, 3, 1, 2, 'PAID', '2020-02-19 02:32:33'),
+(5, 3996640, 4, 1, 2, 'PAID', '2020-02-19 02:32:33'),
+(6, 1735029, 4, 1, 1, 'UNPAID', '2020-02-19 02:32:33'),
+(7, 123, 1, 1, 1, 'UNPAID', '2020-02-19 02:32:33'),
+(8, 4444, 79, 1, 1, 'PAID', '2020-02-19 02:34:17');
 
 -- --------------------------------------------------------
 
@@ -137,8 +139,8 @@ CREATE TABLE `schedule` (
   `schedule_departure_station_id` int(11) NOT NULL,
   `schedule_arrival_station_id` int(11) NOT NULL,
   `schedule_price` int(11) NOT NULL,
-  `schedule_departure_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `schedule_arrival_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `schedule_departure_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `schedule_arrival_time` datetime DEFAULT CURRENT_TIMESTAMP,
   `schedule_bus_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -147,28 +149,28 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`schedule_id`, `schedule_departure_station_id`, `schedule_arrival_station_id`, `schedule_price`, `schedule_departure_time`, `schedule_arrival_time`, `schedule_bus_id`) VALUES
-(1, 1, 2, 200000, '2020-02-15 05:43:16', '2020-02-16 16:43:16', 1),
-(2, 1, 2, 200000, '2020-02-15 17:00:00', '2020-02-17 16:00:01', 1),
-(3, 1, 2, 200000, '2020-02-20 01:00:00', '2020-02-21 10:00:00', 2),
-(4, 3, 2, 200000, '2020-02-21 01:00:00', '2020-02-21 21:00:00', 0),
-(5, 1, 2, 200000, '2020-02-20 01:00:00', '2020-02-21 10:00:00', 2),
-(6, 3, 2, 200000, '2020-02-21 01:00:00', '2020-02-21 21:00:00', 3),
-(7, 3, 7, 250000, '2020-02-20 02:00:00', '2020-02-17 16:00:00', 5),
-(8, 7, 3, 250000, '2020-02-21 09:00:00', '2020-02-22 05:00:00', 7),
-(9, 4, 8, 200000, '2020-02-21 03:00:00', '2020-02-21 17:00:00', 9),
-(10, 4, 9, 250000, '2020-02-20 01:00:00', '2020-02-21 16:00:00', 10),
-(11, 4, 10, 200000, '2020-02-21 09:00:00', '2020-02-22 01:00:00', 20),
-(12, 10, 3, 250000, '2020-02-20 02:00:00', '2020-02-21 11:00:00', 21),
-(13, 5, 9, 200000, '2020-02-21 08:00:00', '2020-02-22 01:00:00', 25),
-(14, 9, 1, 200000, '2020-02-22 03:00:00', '2020-02-22 17:00:00', 12),
-(15, 10, 6, 250000, '2020-02-23 03:00:00', '2020-02-24 01:00:00', 18),
-(16, 10, 1, 300000, '2020-02-23 01:00:00', '2020-02-24 11:00:00', 3),
-(17, 1, 10, 280000, '2020-02-23 04:00:00', '2020-02-23 17:00:00', 4),
-(18, 3, 9, 279000, '2020-02-22 02:00:00', '2020-02-22 21:00:00', 5),
-(19, 5, 7, 290000, '2020-02-22 01:00:00', '2020-02-23 02:00:00', 22),
-(20, 0, 7, 1, '2020-02-21 01:00:00', '2020-02-22 03:00:00', 5),
-(21, 5, 7, 290000, '2020-02-22 01:00:00', '2020-02-23 02:00:00', 22),
-(22, 7, 5, 300000, '2020-02-21 01:00:00', '2020-02-22 03:00:00', 5);
+(1, 1, 2, 200000, '2020-02-15 12:43:16', '2020-02-16 23:43:16', 1),
+(2, 1, 2, 200000, '2020-02-16 00:00:00', '2020-02-17 23:00:01', 1),
+(3, 1, 2, 200000, '2020-02-20 08:00:00', '2020-02-21 17:00:00', 2),
+(4, 3, 2, 200000, '2020-02-21 08:00:00', '2020-02-22 04:00:00', 0),
+(5, 1, 2, 200000, '2020-02-20 08:00:00', '2020-02-21 17:00:00', 2),
+(6, 3, 2, 200000, '2020-02-21 08:00:00', '2020-02-22 04:00:00', 3),
+(7, 3, 7, 250000, '2020-02-20 09:00:00', '2020-02-17 23:00:00', 5),
+(8, 7, 3, 250000, '2020-02-21 16:00:00', '2020-02-22 12:00:00', 7),
+(9, 4, 8, 200000, '2020-02-21 10:00:00', '2020-02-22 00:00:00', 9),
+(10, 4, 9, 250000, '2020-02-20 08:00:00', '2020-02-21 23:00:00', 10),
+(11, 4, 10, 200000, '2020-02-21 16:00:00', '2020-02-22 08:00:00', 20),
+(12, 10, 3, 250000, '2020-02-20 09:00:00', '2020-02-21 18:00:00', 21),
+(13, 5, 9, 200000, '2020-02-21 15:00:00', '2020-02-22 08:00:00', 25),
+(14, 9, 1, 200000, '2020-02-22 10:00:00', '2020-02-23 00:00:00', 12),
+(15, 10, 6, 250000, '2020-02-23 10:00:00', '2020-02-24 08:00:00', 18),
+(16, 10, 1, 300000, '2020-02-23 08:00:00', '2020-02-24 18:00:00', 3),
+(17, 1, 10, 280000, '2020-02-23 11:00:00', '2020-02-24 00:00:00', 4),
+(18, 3, 9, 279000, '2020-02-22 09:00:00', '2020-02-23 04:00:00', 5),
+(19, 5, 7, 290000, '2020-02-22 08:00:00', '2020-02-23 09:00:00', 22),
+(20, 0, 7, 1, '2020-02-21 08:00:00', '2020-02-22 10:00:00', 5),
+(21, 5, 7, 290000, '2020-02-22 08:00:00', '2020-02-23 09:00:00', 22),
+(22, 7, 5, 300000, '2020-02-21 08:00:00', '2020-02-22 10:00:00', 5);
 
 -- --------------------------------------------------------
 
@@ -199,8 +201,8 @@ CREATE TABLE `station` (
 --
 
 INSERT INTO `station` (`station_id`, `station_city_id`, `station_name`) VALUES
-(1, 1, 'bogor station'),
-(2, 2, 'cimahi'),
+(1, 1, 'Bogor station'),
+(2, 1, 'Cimahi'),
 (3, 2, 'Solo Baru'),
 (4, 2, 'Solo Lama'),
 (5, 2, 'Sukoharjo'),
@@ -232,18 +234,23 @@ CREATE TABLE `user` (
   `user_phone` varchar(15) DEFAULT NULL,
   `user_username` varchar(255) NOT NULL,
   `user_password` varchar(255) NOT NULL,
-  `user_photo` varchar(255) DEFAULT NULL
+  `user_photo` varchar(255) DEFAULT NULL,
+  `reset_key` varchar(255) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fcm_token` varchar(300) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `user`
 --
 
-INSERT INTO `user` (`user_id`, `user_name`, `user_email`, `user_phone`, `user_username`, `user_password`, `user_photo`) VALUES
-(1, 'Admin', 'admin@admin', NULL, 'admin', '$2a$04$n7azIK7y1cR818Fe9WfwKe4aEi.MXisDxsntFc2zHJXUug18c/l.6', '1581763586831.PNG'),
-(3, 'Admin', 'admin@admin10', NULL, 'admin10', '$2a$04$OM09Wx9WJCscBVjOK9X0dOXeqThpTvMTC5.trCwTytm2.rtPhROl.', NULL),
-(5, 'Admin', 'admin@admin11', NULL, 'admin11', '$2a$04$e88L5qZINoUHKqqglduGS.41e/qJD4yJWl4j6WsYfZRInOXy3xBmO', NULL),
-(6, 'Admin', 'admin@adminx', NULL, 'adminx', '$2a$04$yzg7h9pzgaPcLU.Aqj1YSOly73wzQwDc70LK9iKjL8ujDqv9cs6Om', NULL);
+INSERT INTO `user` (`user_id`, `user_name`, `user_email`, `user_phone`, `user_username`, `user_password`, `user_photo`, `reset_key`, `updated_at`, `fcm_token`) VALUES
+(1, 'Admin', 'admin@admin', NULL, 'admin', '$2a$04$n7azIK7y1cR818Fe9WfwKe4aEi.MXisDxsntFc2zHJXUug18c/l.6', '1581763586831.PNG', '', '2020-02-19 08:14:32', NULL),
+(3, 'Admin', 'admin@admin10', NULL, 'admin10', '$2a$04$OM09Wx9WJCscBVjOK9X0dOXeqThpTvMTC5.trCwTytm2.rtPhROl.', NULL, '', '2020-02-19 08:14:32', NULL),
+(5, 'Admin', 'admin@admin11', NULL, 'admin11', '$2a$04$e88L5qZINoUHKqqglduGS.41e/qJD4yJWl4j6WsYfZRInOXy3xBmO', NULL, '', '2020-02-19 08:14:32', NULL),
+(6, 'Admin', 'admin@adminx', NULL, 'adminx', '$2a$04$yzg7h9pzgaPcLU.Aqj1YSOly73wzQwDc70LK9iKjL8ujDqv9cs6Om', NULL, '', '2020-02-19 08:14:32', NULL),
+(7, 'budianto', 'ronibudianto361@gmail.com', '1234567890', 'budianto', '$2a$04$3fAZtgMF0.me5lmnid21teDsGvnSB2DfTZtBoqwvvEkPYNuQpSUI6', NULL, '1462', '2020-02-19 09:35:03', NULL),
+(8, '123', '213', '1231', '1312', '1312', '1312', NULL, '2020-02-19 08:28:54', NULL);
 
 --
 -- Indexes for dumped tables
@@ -299,7 +306,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT untuk tabel `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `bus`
@@ -335,7 +342,7 @@ ALTER TABLE `station`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
