@@ -2,15 +2,16 @@ const express = require('express');
 const route = express.Router();
 const { postPayment, postMidtransNotification } = require('../controller/payment');
 const admin = require('firebase-admin');
+const serviceAccount = require('../../bebus-85d60-firebase-adminsdk-s1go7-9f72d5b17c.json');
 
 const test = (request, response, next) => {
 	// This registration token comes from the client FCM SDKs.
-	var registrationToken = 'YOUR_REGISTRATION_TOKEN';
+	var registrationToken = 'f4JhsEdybss:APA91bHcgpUeWepEAvDzhTOha6-O1CAscKh_laFerpJA2wSfgekSz5592WHAwNlNbrBbGuJW-pXD4Jk6wMfP97QO-0ZcwHql6Vhn4tPlGGcPSBw0zV1SZekBm_AozAGZYrxOc6NnvVUF';
 
 	var message = {
-		data: {
-			score: '850',
-			time: '2:45'
+		notification: {
+			title: 'Hello',
+			body: 'World',
 		},
 		token: registrationToken
 	};
