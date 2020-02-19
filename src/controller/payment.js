@@ -54,7 +54,7 @@ module.exports = {
 					transporter.sendMail({
 						from: '"BeBus"',
 						to: bookEmail.user_email,
-						subject: 'BeBus Reset Password Verification',
+						subject: 'BeBus Payment Notification',
 						html: succesMail(bookEmail),
 					},function(err){
 						if(err){
