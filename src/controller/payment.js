@@ -55,7 +55,7 @@ module.exports = {
 						from: '"BeBus"',
 						to: bookEmail.user_email,
 						subject: 'BeBus Reset Password Verification',
-						html: succesMail(bookEmail.departure_station_name),
+						html: succesMail(bookEmail),
 					},function(err){
 						if(err){
 							return helper.response(response, 400, {message: 'Connection Problem'});
