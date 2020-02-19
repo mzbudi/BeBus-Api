@@ -30,7 +30,7 @@ module.exports = {
 	},
 	getBookingByBookingNumber: (bookingNumber) => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM booking JOIN schedule ON booking_schedule_id=schedule_id JOIN bus ON schedule_bus_id=bus_id WHERE booking_number=?', [bookingNumber], (error, result) => {
+			connection.query('SELECT booking.*, departure_station.station_name as departure_station_name, arrival_station.station_name as arrival_station_name, departure_city.city_name as departure_city_name, arrival_city.city_name as arrival_city_name, schedule.*, bus.*, user.user_email, user.user_email FROM booking JOIN schedule ON booking_schedule_id=schedule_id JOIN station AS departure_station ON schedule_departure_station_id = departure_station.station_id JOIN station AS arrival_station ON schedule_arrival_station_id = arrival_station.station_id JOIN bus ON schedule_bus_id=bus_id JOIN user ON booking_user_id=user.user_id JOIN city as departure_city ON departure_station.station_city_id =  departure_city.city_id JOIN city as arrival_city ON arrival_station.station_city_id =  arrival_city.city_id WHERE booking_number=?', [bookingNumber], (error, result) => {
 				if (!error) {
 					if (result.length) {
 						resolve(result[0]);
