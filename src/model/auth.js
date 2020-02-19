@@ -83,7 +83,6 @@ module.exports = {
 					}else{
 						resolve(result);
 					}
-					
 				}else{
 					reject(error);
 				}

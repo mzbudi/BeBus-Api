@@ -2,6 +2,7 @@
 const helper = require('../helper/');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const {forgotMail} = require('../helper/mail');
 
 const {registerUser, 
 	loginUser, 
@@ -49,17 +50,16 @@ module.exports = {
 					}
 				});
 
-				let info = transporter.sendMail({
-					from: '"BeBus" <danieldirgantara861@gmail.com>',
+				transporter.sendMail({
+					from: '"BeBus"',
 					to: resultEmail[0].user_email,
 					subject: 'BeBus Reset Password Verification',
-					html: `<b>Hello this is your Code to Change Password : ${verifCode}</b>`
+					html: forgotMail(verifCode),
 				},function(err){
 					if(err){
 						return helper.response(response, 400, {message: 'Connection Problem'});
 					}
 				});
-				console.log(info);
 				return helper.response(response, 200, {message: 'Email Verification Has been Sent !'});
 			}else{
 				return helper.response(response, 400, {message: 'Email Doesn\'t Valid'});
