@@ -3,6 +3,7 @@ const midtransClient = require('midtrans-client');
 const redisClient = require('../config/redis');
 const nodemailer = require('nodemailer');
 const {succesMail} = require('../helper/mail');
+// const { sendFcmNotification } = require('../helper/fcm');
 
 const { getAllBooking, getBookingById, getBookingByBookingNumber, postBooking, putBooking } = require('../model/booking');
 const { createMidtransTransaction } = require('../model/midtrans');
@@ -50,18 +51,18 @@ module.exports = {
 							pass: process.env.EMAIL_PASS
 						}
 					});
-	
 					transporter.sendMail({
 						from: '"BeBus"',
-						to: bookEmail[0].user_email,
+						to: bookEmail.user_email,
 						subject: 'BeBus Reset Password Verification',
-						html: succesMail(bookEmail[0].departure_station_name),
+						html: succesMail(bookEmail.departure_station_name),
 					},function(err){
 						if(err){
 							return helper.response(response, 400, {message: 'Connection Problem'});
+						} else {
+							return putBooking(orderId, { booking_status: 'PAID' });
 						}
 					});
-					return putBooking(orderId, { booking_status: 'PAID' });
 				} else {
 					return helper.response(response, 400, 'Unknown transaction status');
 				}

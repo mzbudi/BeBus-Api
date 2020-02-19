@@ -41,6 +41,10 @@ module.exports = {
 				body.user_username = request.body.username;
 			}
 		}
+		//Check FCM token
+		if (request.body.fcm_token !== undefined && request.body.fcm_token !== '') {
+			body.user_fcm_token = request.body.fcm_token;
+		}
 		//Check password
 		if (request.body.new_password !== undefined && request.body.new_password !=='') {
 			if (/^.{5,100}$/.test(request.body.new_password) == true) {
