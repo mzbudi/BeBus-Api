@@ -47,7 +47,7 @@ module.exports = {
 		return new Promise((resolve, reject) => {
 			connection.query('INSERT INTO booking SET ?', setData, (error, result) => {
 				if (!error) {
-					const finalResult = { id: result.insertId, ...setData };
+					const finalResult = { booking_id: result.insertId, ...setData };
 					resolve(finalResult);
 				} else {
 					reject(error);
@@ -60,7 +60,7 @@ module.exports = {
 			connection.query('UPDATE booking SET ? WHERE booking_number=?', [setData, bookingNumber], (error, result) => {
 				if (!error) {
 					if (result.affectedRows) {
-						const finalResult = { id: result.insertId, ...setData };
+						const finalResult = { booking_number: bookingNumber, ...setData };
 						resolve(finalResult);
 					} else {
 						reject('Booking number not found');

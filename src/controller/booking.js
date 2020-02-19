@@ -2,7 +2,7 @@ const helper = require('../helper/');
 const redisClient = require('../config/redis');
 const {createMidtransTransaction} = require('../model/midtrans');
 
-const { getAllBooking, getBookingByBookingNumber, getBookingByBookingId, postBooking, putBooking } = require('../model/booking');
+const { getAllBooking, getBookingByBookingNumber, getBookingById, postBooking, putBooking } = require('../model/booking');
 
 module.exports = {
 	getBooking: async (request, response) => {
@@ -25,7 +25,7 @@ module.exports = {
 	postBooking: async (request, response) => {
 		try {
 			const newBooking = await postBooking(request.body);
-			const booking = await getBookingByBookingId(newBooking.booking_id);
+			const booking = await getBookingById(newBooking.booking_id);
 			const paymentUrl = await createMidtransTransaction(booking);
 			booking.paymentUrl = paymentUrl;
 			redisClient.del('booking*');

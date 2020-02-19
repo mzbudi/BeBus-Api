@@ -4,7 +4,13 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const app = express();
 const routeBase = require('./src/routes/index');
+const admin = require('firebase-admin');
+const serviceAccount = require('./bebus-85d60-firebase-adminsdk-s1go7-9f72d5b17c.json');
 
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: 'https://bebus-85d60.firebaseio.com'
+});
 // const cors = require('cors')
 // const helper = require('./src/helper/')
 
