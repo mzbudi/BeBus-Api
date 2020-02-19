@@ -4,7 +4,7 @@ const connection = require('../config/mysql');
 module.exports = {
 	getAllBooking: (user_id) => {
 		return new Promise((resolve, reject) => {
-			connection.query('SELECT * FROM booking JOIN schedule ON booking_schedule_id=schedule_id JOIN bus ON schedule_bus_id=bus_id WHERE booking_user_id = ?',[user_id], (error, result) => {
+			connection.query('SELECT * FROM booking JOIN schedule ON booking_schedule_id=schedule_id JOIN bus ON schedule_bus_id=bus_id WHERE booking_user_id = ? ORDER BY created_at DESC' ,[user_id], (error, result) => {
 				if (!error) {
 					resolve(result);
 				} else {
