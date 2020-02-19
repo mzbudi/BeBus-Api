@@ -24,6 +24,9 @@ module.exports = {
 	loginUser: async (request, response) => {
 		try {
 			const result = await loginUser(request.body.user_username, request.body.user_password);
+			if (result.user_photo !== null && result.user_photo !== '') {
+				result.user_photo = `${process.env.PUBLIC_ASSETS}/${result.user_photo}`;
+			}
 			const loginData = { ...result };
 			const token = jwt.sign(loginData, process.env.JWT_SECRET, { algorithm: 'HS256', expiresIn: '7d', });
 			return helper.response(response, 200, { ...result, token });
