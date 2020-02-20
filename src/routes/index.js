@@ -16,7 +16,7 @@ route.use('/station',stationRoute);
 route.use('/city', cityRoute);
 route.use('/user', userRoute);
 route.use('/schedule', scheduleRoute);
-route.use('/booking', bookingRoute);
+route.use('/booking',authorization, bookingRoute);
 route.use('/payment', paymentRoute);
 
 module.exports = route;

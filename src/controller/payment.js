@@ -5,7 +5,7 @@ const nodemailer = require('nodemailer');
 const {succesMail} = require('../helper/mail');
 // const { sendFcmNotification } = require('../helper/fcm');
 
-const { getAllBooking, getBookingById, getBookingByBookingNumber, postBooking, putBooking } = require('../model/booking');
+const {  getBookingByBookingNumber, putBooking } = require('../model/booking');
 const { createMidtransTransaction } = require('../model/midtrans');
 
 module.exports = {
@@ -40,7 +40,7 @@ module.exports = {
 				} else if (transactionStatus == 'cancel' || transactionStatus == 'deny' || transactionStatus == 'expire') {
 					return putBooking(orderId, { booking_status: 'FAILED' });
 				} else if (transactionStatus == 'pending') {
-					 return putBooking(orderId, { booking_status: 'PENDING' });
+					return putBooking(orderId, { booking_status: 'PENDING' });
 				} else if (transactionStatus == 'settlement'){
 					let transporter = nodemailer.createTransport({
 						host: 'smtp.gmail.com',
